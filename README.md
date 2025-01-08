@@ -1,10 +1,10 @@
 # RDK3 BLE EnOcean
 
-This example illustrates how to use a RDK3 to listen to telegrams of EnOcean BLE switches PTM216B.
+This example illustrates how to use an RDK3 to listen to telegrams of EnOcean BLE switches PTM216B.
 
-Once a EnOcean telegram has been received (and has been considered as a valid telegram), if the source is inside the database, a text message is played by the TextToSpeech board.
+Once an EnOcean telegram has been received (and has been considered a valid telegram), if the source is inside the database, a text message is played by the TextToSpeech board.
 
-To add a device into the database, press the USER BTN1 of the RDK3. This will add the next device that sends a valid EnOcean telegram into the database.
+To add a device to the database, press the USER BTN1 of the RDK3. This will add the next device that sends a valid EnOcean telegram into the database.
 
 <img src="pictures/rdk3_tts.JPEG" style="zoom:20%;" />
 
@@ -14,9 +14,9 @@ To add a device into the database, press the USER BTN1 of the RDK3. This will ad
 
 <img src="pictures/enocean_message_format.png" style="zoom:100%;" />
 
-Remark: type (0xFF) and Manufacturer ID (0x03DA) are for PTM216B. Other EnOcean sensors might have other type and manufacturer ID.
+Remark: type (0xFF) and Manufacturer ID (0x03DA) are for PTM216B. Other EnOcean sensors might have other types and manufacturer IDs.
 
-Example when receiving a telegram from a switch (after beeing pressed or released):
+Example when receiving a telegram from a switch (after being pressed or released):
 
 ```
 Data length : 13 
@@ -29,7 +29,7 @@ Switch status: 0x8
 Retval = 0 
 ```
 
-The switch status field looks like following:
+The switch status field looks like the following:
 <img src="pictures/enocean_switch_format.png" style="zoom:100%;" />
 <img src="pictures/enocean_switch_description.png" style="zoom:100%;" />
 
@@ -61,7 +61,7 @@ Please follow the instructions of the [user manual](https://github.com/RutronikS
 
 ### Powering the RDK3 from the single-cell Li-ION/Li-PO battery
 
-The RAB4-RTK adapter board needs to be powered from a +5V power supply source via Arduino Headers. If the USB-C cable is connected with RDK3 and PC, the power is already supplied without any additional setup. 
+The TEXT-TO-SPEECH adapter board needs to be powered from a +5V power supply source via Arduino Headers. If the USB-C cable is connected with RDK3 and PC, the power is already supplied without any additional setup. 
 
 To make this demo portable and use it with Li-PO(or Li-ION) batteries, the OTG booster needs to be activated. This demo has a very simple method implemented which allows users to enable the boost mode of the [DIO59020](https://www.dioo.com/uploads/product/20210520/9fdd66c936d397ab75a4638578b09190.pdf) charger just by pressing a button USER BTN1. The 
 
