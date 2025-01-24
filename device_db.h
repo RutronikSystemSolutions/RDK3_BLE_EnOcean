@@ -22,8 +22,8 @@ int device_db_add(uint8_t* address);
 /**
  * @brief Check if address is inside the database or not
  *
- * @retval 0 not in database
- * @retval 1 device is in database
+ * @retval-10 not in database
+ * @retval > 0 address of device in the database
  */
 int device_db_is_inside(uint8_t* address);
 

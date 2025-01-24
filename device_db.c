@@ -17,12 +17,12 @@ typedef struct
 } device_addr_t;
 
 static device_addr_t db_devices[DEVICE_DB_MAX_COUNT];
-static uint16_t db_count;
+static uint16_t db_count = 0;
 
 int device_db_add(uint8_t* address)
 {
 	if (db_count >= DEVICE_DB_MAX_COUNT) return -1;
-	if (device_db_is_inside(address)) return -2;
+	if (device_db_is_inside(address) >= 0) return -2;
 	// Copy address
 	for(uint16_t i = 0; i < BLE_ADDRESS_LEN; ++i)
 		db_devices[db_count].addr[i] = address[i];
@@ -46,9 +46,9 @@ int device_db_is_inside(uint8_t* address)
 	for(int device_idx = 0; device_idx < db_count; ++device_idx)
 	{
 		if (is_same_addr(address, db_devices[device_idx].addr))
-			return 1;
+			return device_idx;
 	}
-	return 0;
+	return -1;
 }
 
 

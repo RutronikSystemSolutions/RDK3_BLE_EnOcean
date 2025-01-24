@@ -121,6 +121,11 @@ static void init_watchdog()
 	cyhal_wdt_init(&watchdog, WDT_TIMEOUT_MS);
 }
 
+static void print_address(uint8_t* address)
+{
+	printf("0x%x:0x%x:0x%x:0x%x:0x%x:0x%x\r\n", address[0], address[1], address[2], address[3], address[4], address[5]);
+}
+
 void switch_listener(uint8_t* address, uint8_t type, uint16_t manufacturer_id, uint32_t counter, uint8_t switch_status)
 {
 	const uint8_t REQUESTED_TYPE = 0xFF;
@@ -129,25 +134,35 @@ void switch_listener(uint8_t* address, uint8_t type, uint16_t manufacturer_id, u
 	// Only react to PTM216B switches
 	if ((type == REQUESTED_TYPE) && (manufacturer_id == REQUESTED_MANUFACTURED_ID))
 	{
-		printf("Type: %d \r\n", type);
-		printf("Manufacturer ID: %d \r\n", manufacturer_id);
-		printf("Counter: %lu \r\n", counter);
-		printf("Switch status: %d \r\n", switch_status);
+//		printf("Type: %d \r\n", type);
+//		printf("Manufacturer ID: %d \r\n", manufacturer_id);
+//		printf("Counter: %lu \r\n", counter);
+//		printf("Switch status: %d \r\n", switch_status);
 
 		// Store the address to DB?
 		if (store_next)
 		{
 			store_next = 0;
-			device_db_add(address);
+			printf("Store address\r\n");
+			print_address(address);
+			if (device_db_add(address) != 0)
+			{
+				printf("Error while adding address.\r\n");
+			}
 			cyhal_gpio_write((cyhal_gpio_t)LED3, CYBSP_LED_STATE_OFF);
 		}
 
+		// Only play by press
 		if (switch_status & 1)
 		{
-			if (device_db_is_inside(address))
+			int db_index = device_db_is_inside(address);
+			printf("Db index; %d\r\n", db_index);
+			if (db_index >= 0)
 			{
-				// Only play by press
-				epson_tts_play_sound_async(0);
+				if (db_index == 0)
+					epson_tts_play_sound_async(0);
+				else
+					epson_tts_play_sound_async(1);
 			}
 		}
 
