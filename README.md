@@ -53,6 +53,10 @@ For Modus Toolbox version 3.2 and more, you need to install Python manually.
 pip install cysecuretools
 ```
 
+## Supported toolchains (make variable 'TOOLCHAIN')
+
+- GNU Arm&reg; Embedded Compiler v11.3.1 (`GCC_ARM`) - Default value of `TOOLCHAIN`
+
 ### Provisioning of the RDK3
 
 The CYB06447BZI-BLD53 device must be provisioned with keys and policies before being programmed.
